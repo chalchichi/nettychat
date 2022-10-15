@@ -67,6 +67,7 @@ public class EchoServer
     }
 
     public static void main(String[] args) throws Exception {
+        System.out.println("Server Start");
         new EchoServer().startServer();
     }
 }
