@@ -9,13 +9,14 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
         String message = (String)msg;
-
+        System.out.println(msg);
         Channel channel = ctx.channel();
+        channel.writeAndFlush(message.concat("\n"));
         if(!EchoServer.channels.contains(channel))
         {
             EchoServer.channels.forEach(channel1 ->
                     {
-                        channel1.writeAndFlush("<<"+message+">> come in \n");
+                        channel1.writeAndFlush(message.concat("\n"));
                     });
 
             EchoServer.channels.add(channel);
@@ -24,8 +25,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         else {
             EchoServer.channels.forEach(channel1 ->
                     {
-                        channel1.writeAndFlush(EchoServer.nicnames.get(channel) + " : '" + message + "' \n");
-                        System.out.println(message);
+                        //channel1.writeAndFlush(EchoServer.nicnames.get(channel) + " : '" + message + "' \n");
+                        channel1.writeAndFlush(message.concat("\n"));
+                        System.out.println(message.concat("\n"));
                     }
             );
             if ("quit".equals(message)) {
